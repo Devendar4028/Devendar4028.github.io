@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeSpan Analytics | Professional Age Calculator</title>
+    <meta name="description" content="Professional age analysis with generation insights, zodiac information, and comprehensive life statistics.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #dbeafe;
+            --secondary: #475569;
+            --accent: #059669;
+            --white: #ffffff;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-400: #94a3b8;
+            --gray-500: #64748b;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-800: #1e293b;
+            --gray-900: #0f172a;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --radius: 0.5rem;
+            --radius-lg: 1rem;
+        }
+
+        body {
+            background: var(--gray-50);
+            color: var(--gray-800);
+            line-height: 1.6;
+            font-weight: 400;
+            min-height: 100vh;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Professional Header */
+        header {
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-200);
+            padding: 1.5rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--primary);
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.5rem;
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: var(--gray-600);
+            line-height: 1.6;
+        }
+
+        /* Calculator Card - Minimalist */
+        .calculator-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--gray-200);
+        }
+
+        .card-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .card-header h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 0.5rem;
+        }
+
+        .card-header p {
+            color: var(--gray-600);
+            font-size: 1rem;
+        }
+
+        .input-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-field label {
+            display: block;
+            font-weight: 500;
+            color: var(--gray-700);
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .input-field input {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            background: var(--white);
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius);
+            color: var(--gray-900);
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .input-field input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        .btn-calculate {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 1.25rem 2rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            width: 100%;
+        }
+
+        .btn-calculate:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-calculate:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Loading State */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--gray-200);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        .loading p {
+            color: var(--gray-600);
+            font-size: 0.875rem;
+        }
+
+        /* Results Sections */
+        .results {
+            display: none;
+        }
+
+        .results.active {
+            display: block;
+        }
+
+        .section {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--gray-200);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header p {
+            color: var(--gray-600);
+            font-size: 1rem;
+        }
+
+        /* Main Age Display - Minimalist */
+        .main-age-display {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--white);
+            padding: 2.5rem 2rem;
+            border-radius: var(--radius-lg);
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .main-age {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            line-height: 1.1;
+        }
+
+        .age-subtitle {
+            font-size: 1.125rem;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        /* Identity Grid - Minimalist Cards */
+        .identity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .identity-card {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .identity-card:hover {
+            border-color: var(--gray-300);
+        }
+
+        .identity-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--primary-light);
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            font-size: 1.25rem;
+        }
+
+        .identity-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 0.75rem;
+        }
+
+        .identity-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .identity-description {
+            color: var(--gray-600);
+            line-height: 1.6;
+            font-size: 0.875rem;
+        }
+
+        .zodiac-traits {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            background: var(--gray-50);
+            border-radius: var(--radius);
+            border-left: 3px solid var(--primary);
+            font-size: 0.75rem;
+        }
+
+        /* Time Grid - Minimalist Metrics */
+        .time-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .time-card {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .time-card:hover {
+            border-color: var(--gray-300);
+        }
+
+        .time-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gray-100);
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: var(--primary);
+            font-size: 1rem;
+        }
+
+        .time-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 0.5rem;
+            line-height: 1;
+        }
+
+        .time-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--gray-700);
+            margin-bottom: 0.5rem;
+        }
+
+        .time-description {
+            color: var(--gray-600);
+            font-size: 0.75rem;
+            line-height: 1.5;
+        }
+
+        /* Stats Grid - Minimalist Metrics */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .stat-card {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            transition: all 0.2s ease;
+        }
+
+        .stat-card:hover {
+            border-color: var(--gray-300);
+        }
+
+        .stat-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .stat-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--gray-100);
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.75rem;
+            color: var(--primary);
+            font-size: 1rem;
+        }
+
+        .stat-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--gray-700);
+        }
+
+        .stat-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-description {
+            color: var(--gray-600);
+            font-size: 0.75rem;
+            line-height: 1.5;
+        }
+
+        /* Progress Section */
+        .progress-section {
+            text-align: center;
+        }
+
+        .progress-container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .progress-card {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            color: var(--gray-700);
+            font-size: 0.875rem;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: var(--gray-200);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 0.75rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 3px;
+            transition: width 1.5s ease-in-out;
+        }
+
+        /* Share Section - Minimalist */
+        .share-section {
+            text-align: center;
+            padding: 2rem;
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--gray-200);
+        }
+
+        .share-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 0.75rem;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .share-btn {
+            padding: 0.75rem 1.25rem;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            background: var(--white);
+            color: var(--gray-700);
+        }
+
+        .share-btn:hover {
+            background: var(--gray-50);
+            border-color: var(--gray-400);
+        }
+
+        .share-copy {
+            background: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+        }
+
+        .share-copy:hover {
+            background: var(--primary-dark);
+            border-color: var(--primary-dark);
+        }
+
+        /* Error Message */
+        .error-message {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #dc2626;
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius);
+            margin: 1rem 0;
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+
+        /* Google Ads Containers - Professional */
+        .ad-container {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .ad-label {
+            color: var(--gray-500);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.75rem;
+            display: block;
+            font-weight: 600;
+        }
+
+        .ad-placeholder {
+            background: var(--gray-50);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            color: var(--gray-500);
+            font-weight: 500;
+            border: 1px dashed var(--gray-300);
+            font-size: 0.875rem;
+        }
+
+        .ad-horizontal {
+            max-width: 728px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .ad-inline {
+            max-width: 468px;
+            margin: 1rem auto;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--gray-900);
+            color: var(--gray-300);
+            padding: 2rem 0;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .footer-content p {
+            margin-bottom: 0.75rem;
+            font-size: 0.75rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 0.5rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .calculator-card {
+                padding: 1.5rem;
+            }
+
+            .input-group {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .main-age {
+                font-size: 2rem;
+            }
+
+            .identity-grid, .time-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .share-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .share-btn {
+                width: 100%;
+                max-width: 200px;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+
+        /* Animations */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Scroll to top button */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .scroll-to-top:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .scroll-to-top.visible {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <div>
+                        <h1>LifeSpan Analytics</h1>
+                        <p class="subtitle">Professional age analysis & life statistics</p>
+                    </div>
+                </div>
+                <div class="ad-container ad-inline">
+                    <span class="ad-label">Advertisement</span>
+                    <div class="ad-placeholder">Google AdSense 468x60</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Horizontal Ad -->
+        <div class="ad-container ad-horizontal">
+            <span class="ad-label">Advertisement</span>
+            <div class="ad-placeholder">Google AdSense 728x90</div>
+        </div>
+
+        <!-- Calculator Card -->
+        <section class="calculator-card fade-in">
+            <div class="card-header">
+                <h2>Begin Your Analysis</h2>
+                <p>Enter your birthdate to generate a comprehensive life profile</p>
+            </div>
+            
+            <div class="input-group">
+                <div class="input-field">
+                    <label for="birthdate">Date of Birth</label>
+                    <input type="date" id="birthdate" required>
+                </div>
+                <div class="input-field">
+                    <label for="as-of-date">Analysis Date (Optional)</label>
+                    <input type="date" id="as-of-date">
+                </div>
+            </div>
+
+            <div class="error-message" id="errorMessage">
+                <i class="fas fa-exclamation-circle"></i>
+                <span id="errorText"></span>
+            </div>
+            
+            <button class="btn-calculate" onclick="calculateAge()" id="calculateBtn">
+                <i class="fas fa-chart-line"></i>
+                Generate Analysis Report
+            </button>
+
+            <div class="loading" id="loadingAnimation">
+                <div class="loading-spinner"></div>
+                <p>Processing your comprehensive analysis...</p>
+            </div>
+        </section>
+
+        <!-- Inline Ad -->
+        <div class="ad-container ad-inline">
+            <span class="ad-label">Advertisement</span>
+            <div class="ad-placeholder">Google AdSense 468x60</div>
+        </div>
+
+        <!-- Results Section -->
+        <div id="results" class="results">
+            <!-- Results will be dynamically populated -->
+        </div>
+
+        <!-- Bottom Horizontal Ad -->
+        <div class="ad-container ad-horizontal">
+            <span class="ad-label">Advertisement</span>
+            <div class="ad-placeholder">Google AdSense 728x90</div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2024 LifeSpan Analytics. All calculations are estimates for informational purposes.</p>
+                <p>Designed for accuracy and reliability in personal analytics.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-to-top" id="scrollToTop" onclick="scrollToTop()">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script>
+        // Zodiac signs database
+        const zodiacSigns = [
+            { name: "Aries", symbol: "♈", dates: "March 21 - April 19", traits: "Courageous, Determined, Confident, Enthusiastic, Optimistic, Honest, Passionate" },
+            { name: "Taurus", symbol: "♉", dates: "April 20 - May 20", traits: "Reliable, Patient, Practical, Devoted, Responsible, Stable" },
+            { name: "Gemini", symbol: "♊", dates: "May 21 - June 20", traits: "Gentle, Affectionate, Curious, Adaptable, Outgoing, Intelligent" },
+            { name: "Cancer", symbol: "♋", dates: "June 21 - July 22", traits: "Tenacious, Highly imaginative, Loyal, Emotional, Sympathetic, Persuasive" },
+            { name: "Leo", symbol: "♌", dates: "July 23 - August 22", traits: "Creative, Passionate, Generous, Warm-hearted, Cheerful, Humorous" },
+            { name: "Virgo", symbol: "♍", dates: "August 23 - September 22", traits: "Loyal, Analytical, Kind, Hardworking, Practical" },
+            { name: "Libra", symbol: "♎", dates: "September 23 - October 22", traits: "Cooperative, Diplomatic, Gracious, Fair-minded, Social" },
+            { name: "Scorpio", symbol: "♏", dates: "October 23 - November 21", traits: "Resourceful, Brave, Passionate, Stubborn, A true friend" },
+            { name: "Sagittarius", symbol: "♐", dates: "November 22 - December 21", traits: "Generous, Idealistic, Great sense of humor" },
+            { name: "Capricorn", symbol: "♑", dates: "December 22 - January 19", traits: "Responsible, Disciplined, Self-control, Good managers" },
+            { name: "Aquarius", symbol: "♒", dates: "January 20 - February 18", traits: "Progressive, Original, Independent, Humanitarian" },
+            { name: "Pisces", symbol: "♓", dates: "February 19 - March 20", traits: "Compassionate, Artistic, Intuitive, Gentle, Wise, Musical" }
+        ];
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set default date to 25 years ago
+            const defaultDate = new Date();
+            defaultDate.setFullYear(defaultDate.getFullYear() - 25);
+            document.getElementById('birthdate').valueAsDate = defaultDate;
+            
+            // Set max dates to today
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('birthdate').max = today;
+            document.getElementById('as-of-date').max = today;
+
+            // Initialize scroll animations
+            initScrollAnimations();
+            
+            // Initialize scroll to top button
+            initScrollToTop();
+        });
+
+        // Scroll animations
+        function initScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // Initialize scroll to top button
+        function initScrollToTop() {
+            const scrollToTopBtn = document.getElementById('scrollToTop');
+            
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    scrollToTopBtn.classList.add('visible');
+                } else {
+                    scrollToTopBtn.classList.remove('visible');
+                }
+            });
+        }
+
+        // Scroll to top function
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Smooth scroll to element
+        function scrollToElement(elementId) {
+            const element = document.getElementById(elementId);
+            if (element) {
+                const offset = 80; // Adjust this value based on your header height
+                const elementPosition = element.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        // Auto scroll to results after calculation
+        function autoScrollToResults() {
+            setTimeout(() => {
+                scrollToElement('results');
+            }, 100); // Small delay to ensure results are rendered
+        }
+
+        // Format numbers
+        function formatNumber(num) {
+            if (num >= 1e12) return (num / 1e12).toFixed(1) + 'T';
+            if (num >= 1e9) return (num / 1e9).toFixed(1) + 'B';
+            if (num >= 1e6) return (num / 1e6).toFixed(1) + 'M';
+            if (num >= 1e3) return (num / 1e3).toFixed(1) + 'K';
+            return num.toLocaleString();
+        }
+
+        // Show error
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            const errorText = document.getElementById('errorText');
+            errorText.textContent = message;
+            errorDiv.style.display = 'flex';
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 5000);
+        }
+
+        // Get generation based on birth year
+        function getGeneration(birthYear) {
+            if (birthYear >= 2013) return { 
+                name: "Generation Alpha", 
+                years: "2013-Present",
+                description: "The first generation entirely born in the 21st century. Digital natives from birth, growing up with smartphones, AI, and streaming services as the norm."
+            };
+            if (birthYear >= 1997) return { 
+                name: "Generation Z", 
+                years: "1997-2012",
+                description: "True digital natives who grew up with the internet and social media. Known for being entrepreneurial, progressive, and tech-savvy."
+            };
+            if (birthYear >= 1981) return { 
+                name: "Millennials", 
+                years: "1981-1996",
+                description: "Came of age during the rise of the internet and witnessed 9/11. Known for being tech-adaptable, educated, and valuing experiences."
+            };
+            if (birthYear >= 1965) return { 
+                name: "Generation X", 
+                years: "1965-1980",
+                description: "The latchkey generation that witnessed the rise of personal computing. Independent, skeptical, and value work-life balance."
+            };
+            if (birthYear >= 1946) return { 
+                name: "Baby Boomers", 
+                years: "1946-1964",
+                description: "Post-WWII generation that witnessed the moon landing and civil rights movement. Known for being optimistic and work-centric."
+            };
+            if (birthYear >= 1928) return { 
+                name: "Silent Generation", 
+                years: "1928-1945",
+                description: "Grew up during the Great Depression and WWII. Known for being disciplined, loyal, and valuing financial security."
+            };
+            return { 
+                name: "Greatest Generation", 
+                years: "1901-1927",
+                description: "Survived the Great Depression and fought in WWII. Known for resilience, patriotism, and strong sense of duty."
+            };
+        }
+
+        // Get zodiac sign
+        function getZodiacSign(birthdate) {
+            const month = birthdate.getMonth() + 1;
+            const day = birthdate.getDate();
+            
+            if ((month === 3 && day >= 21) || (month === 4 && day <= 19)) return zodiacSigns[0];
+            if ((month === 4 && day >= 20) || (month === 5 && day <= 20)) return zodiacSigns[1];
+            if ((month === 5 && day >= 21) || (month === 6 && day <= 20)) return zodiacSigns[2];
+            if ((month === 6 && day >= 21) || (month === 7 && day <= 22)) return zodiacSigns[3];
+            if ((month === 7 && day >= 23) || (month === 8 && day <= 22)) return zodiacSigns[4];
+            if ((month === 8 && day >= 23) || (month === 9 && day <= 22)) return zodiacSigns[5];
+            if ((month === 9 && day >= 23) || (month === 10 && day <= 22)) return zodiacSigns[6];
+            if ((month === 10 && day >= 23) || (month === 11 && day <= 21)) return zodiacSigns[7];
+            if ((month === 11 && day >= 22) || (month === 12 && day <= 21)) return zodiacSigns[8];
+            if ((month === 12 && day >= 22) || (month === 1 && day <= 19)) return zodiacSigns[9];
+            if ((month === 1 && day >= 20) || (month === 2 && day <= 18)) return zodiacSigns[10];
+            return zodiacSigns[11]; // Pisces
+        }
+
+        // Calculate exact age with all time units
+        function calculateExactAge(birthdate, asOfDate) {
+            let years = asOfDate.getFullYear() - birthdate.getFullYear();
+            let months = asOfDate.getMonth() - birthdate.getMonth();
+            let days = asOfDate.getDate() - birthdate.getDate();
+
+            // Adjust for negative days
+            if (days < 0) {
+                months--;
+                const lastMonth = new Date(asOfDate.getFullYear(), asOfDate.getMonth(), 0);
+                days += lastMonth.getDate();
+            }
+
+            // Adjust for negative months
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+
+            // Calculate all time units
+            const diffTime = asOfDate - birthdate;
+            const totalSeconds = Math.floor(diffTime / 1000);
+            const totalMinutes = Math.floor(totalSeconds / 60);
+            const totalHours = Math.floor(totalMinutes / 60);
+            const totalDays = Math.floor(totalHours / 24);
+            const totalWeeks = Math.floor(totalDays / 7);
+            const totalMonths = years * 12 + months;
+
+            return {
+                years, months, days,
+                totalSeconds, totalMinutes, totalHours, totalDays, totalWeeks, totalMonths
+            };
+        }
+
+        // Main calculation function
+        function calculateAge() {
+            const birthdateInput = document.getElementById('birthdate').value;
+            const asOfDateInput = document.getElementById('as-of-date').value || new Date().toISOString().split('T')[0];
+            
+            if (!birthdateInput) {
+                showError("Please enter your birthdate to continue");
+                return;
+            }
+
+            const birthdate = new Date(birthdateInput);
+            const asOfDate = new Date(asOfDateInput);
+            const today = new Date();
+
+            if (birthdate > asOfDate) {
+                showError("Birthdate cannot be in the future!");
+                return;
+            }
+
+            if (asOfDate > today) {
+                showError("Cannot calculate age for future dates!");
+                return;
+            }
+
+            // Show loading
+            const loading = document.getElementById('loadingAnimation');
+            const results = document.getElementById('results');
+            const calculateBtn = document.getElementById('calculateBtn');
+            
+            calculateBtn.disabled = true;
+            loading.style.display = 'block';
+            results.classList.remove('active');
+
+            setTimeout(() => {
+                try {
+                    const age = calculateExactAge(birthdate, asOfDate);
+                    displayResults(age, birthdate, asOfDate);
+                    
+                    // Auto scroll to results after calculation
+                    autoScrollToResults();
+                } catch (error) {
+                    showError("Error calculating age. Please try again.");
+                    console.error(error);
+                } finally {
+                    loading.style.display = 'none';
+                    calculateBtn.disabled = false;
+                }
+            }, 1500);
+        }
+
+        // Display comprehensive results
+        function displayResults(age, birthdate, asOfDate) {
+            const resultsDiv = document.getElementById('results');
+            const birthYear = birthdate.getFullYear();
+            
+            // Get generation and zodiac
+            const generation = getGeneration(birthYear);
+            const zodiac = getZodiacSign(birthdate);
+            
+            // Calculate additional statistics
+            const heartbeats = Math.floor(age.totalMinutes * 72);
+            const breaths = Math.floor(age.totalMinutes * 16);
+            const blinks = Math.floor(age.totalMinutes * 15);
+            const steps = age.totalDays * 7500;
+            const sleepHours = Math.floor(age.totalDays * 8);
+            const meals = age.totalDays * 3;
+            
+            // Calculate milestones
+            const nextBigBirthday = Math.ceil(age.years / 10) * 10;
+            const yearsToNext = nextBigBirthday - age.years;
+            const lifePercentage = Math.min(100, Math.round((age.years / 80) * 100));
+
+            resultsDiv.innerHTML = `
+                <!-- Main Age Display -->
+                <section class="main-age-display fade-in">
+                    <div class="main-age">${age.years} Years ${age.months} Months ${age.days} Days</div>
+                    <div class="age-subtitle">Comprehensive Life Analysis Complete</div>
+                </section>
+
+                <!-- Generation & Zodiac Section -->
+                <section class="section fade-in">
+                    <div class="section-header">
+                        <h2>Personal Profile</h2>
+                        <p>Demographic and astrological insights</p>
+                    </div>
+                    <div class="identity-grid">
+                        <!-- Generation Card -->
+                        <div class="identity-card">
+                            <div class="identity-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="identity-title">Generation Analysis</div>
+                            <div class="identity-value">${generation.name}</div>
+                            <div class="identity-description">
+                                <strong>Years:</strong> ${generation.years}<br><br>
+                                ${generation.description}
+                            </div>
+                        </div>
+
+                        <!-- Zodiac Card -->
+                        <div class="identity-card">
+                            <div class="identity-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="identity-title">Zodiac Sign</div>
+                            <div class="identity-value">${zodiac.symbol} ${zodiac.name}</div>
+                            <div class="identity-description">
+                                <strong>Dates:</strong> ${zodiac.dates}
+                                <div class="zodiac-traits">
+                                    <strong>Key Traits:</strong><br>
+                                    ${zodiac.traits}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Time Breakdown -->
+                <section class="section fade-in">
+                    <div class="section-header">
+                        <h2>Time Analysis</h2>
+                        <p>Comprehensive breakdown of your life duration</p>
+                    </div>
+                    <div class="time-grid">
+                        <div class="time-card">
+                            <div class="time-icon">
+                                <i class="fas fa-stopwatch"></i>
+                            </div>
+                            <div class="time-value">${formatNumber(age.totalSeconds)}</div>
+                            <div class="time-label">Total Seconds</div>
+                            <div class="time-description">Moments lived and experienced</div>
+                        </div>
+                        <div class="time-card">
+                            <div class="time-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="time-value">${formatNumber(age.totalMinutes)}</div>
+                            <div class="time-label">Total Minutes</div>
+                            <div class="time-description">Minutes of life experiences</div>
+                        </div>
+                        <div class="time-card">
+                            <div class="time-icon">
+                                <i class="fas fa-hourglass-half"></i>
+                            </div>
+                            <div class="time-value">${formatNumber(age.totalHours)}</div>
+                            <div class="time-label">Total Hours</div>
+                            <div class="time-description">Hours of memories created</div>
+                        </div>
+                        <div class="time-card">
+                            <div class="time-icon">
+                                <i class="fas fa-calendar-day"></i>
+                            </div>
+                            <div class="time-value">${formatNumber(age.totalDays)}</div>
+                            <div class="time-label">Total Days</div>
+                            <div class="time-description">Days of your life journey</div>
+                        </div>
+                        <div class="time-card">
+                            <div class="time-icon">
+                                <i class="fas fa-calendar-week"></i>
+                            </div>
+                            <div class="time-value">${formatNumber(age.totalWeeks)}</div>
+                            <div class="time-label">Total Weeks</div>
+                            <div class="time-description">Weeks of personal growth</div>
+                        </div>
+                        <div class="time-card">
+                            <div class="time-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <div class="time-value">${formatNumber(age.totalMonths)}</div>
+                            <div class="time-label">Total Months</div>
+                            <div class="time-description">Months of life experiences</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Life Statistics -->
+                <section class="section fade-in">
+                    <div class="section-header">
+                        <h2>Life Statistics</h2>
+                        <p>Estimated biological and activity metrics</p>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div class="stat-icon">
+                                    <i class="fas fa-heartbeat"></i>
+                                </div>
+                                <div class="stat-title">Heartbeats</div>
+                            </div>
+                            <div class="stat-value">${formatNumber(heartbeats)}</div>
+                            <div class="stat-description">Estimated heartbeats based on average 72 BPM</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div class="stat-icon">
+                                    <i class="fas fa-wind"></i>
+                                </div>
+                                <div class="stat-title">Breaths Taken</div>
+                            </div>
+                            <div class="stat-value">${formatNumber(breaths)}</div>
+                            <div class="stat-description">Based on average 16 breaths per minute</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div class="stat-icon">
+                                    <i class="fas fa-eye"></i>
+                                </div>
+                                <div class="stat-title">Eye Blinks</div>
+                            </div>
+                            <div class="stat-value">${formatNumber(blinks)}</div>
+                            <div class="stat-description">Estimated based on 15 blinks per minute</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div class="stat-icon">
+                                    <i class="fas fa-walking"></i>
+                                </div>
+                                <div class="stat-title">Steps Taken</div>
+                            </div>
+                            <div class="stat-value">${formatNumber(steps)}</div>
+                            <div class="stat-description">Estimated based on 7,500 steps per day</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div class="stat-icon">
+                                    <i class="fas fa-bed"></i>
+                                </div>
+                                <div class="stat-title">Sleep Hours</div>
+                            </div>
+                            <div class="stat-value">${formatNumber(sleepHours)}</div>
+                            <div class="stat-description">Based on 8 hours of sleep per night</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div class="stat-icon">
+                                    <i class="fas fa-utensils"></i>
+                                </div>
+                                <div class="stat-title">Meals Eaten</div>
+                            </div>
+                            <div class="stat-value">${formatNumber(meals)}</div>
+                            <div class="stat-description">Estimated based on 3 meals per day</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Life Progress -->
+                <section class="section fade-in">
+                    <div class="section-header">
+                        <h2>Life Milestones</h2>
+                        <p>Your journey and upcoming milestones</p>
+                    </div>
+                    <div class="progress-section">
+                        <div class="progress-container">
+                            <div class="progress-card">
+                                <div class="progress-label">
+                                    <span>Life Progress</span>
+                                    <span>${lifePercentage}%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: ${lifePercentage}%"></div>
+                                </div>
+                                <p>Based on average life expectancy of 80 years</p>
+                            </div>
+                            
+                            <div class="progress-card">
+                                <div class="identity-title">Next Major Birthday</div>
+                                <div class="identity-value" style="color: var(--accent);">${nextBigBirthday} Years</div>
+                                <div class="identity-description">
+                                    You'll reach this milestone in ${yearsToNext} year${yearsToNext !== 1 ? 's' : ''}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Share Section -->
+                <section class="share-section fade-in">
+                    <h2 class="share-title">Share Your Analysis</h2>
+                    <p>Compare your life statistics with friends and family</p>
+                    <div class="share-buttons">
+                        <button class="share-btn" onclick="shareOnTwitter()">
+                            <i class="fab fa-twitter"></i>
+                            Twitter
+                        </button>
+                        <button class="share-btn" onclick="shareOnFacebook()">
+                            <i class="fab fa-facebook-f"></i>
+                            Facebook
+                        </button>
+                        <button class="share-btn share-copy" onclick="copyToClipboard()">
+                            <i class="fas fa-copy"></i>
+                            Copy Results
+                        </button>
+                    </div>
+                </section>
+            `;
+
+            // Show results
+            resultsDiv.classList.add('active');
+            
+            // Trigger animations
+            setTimeout(() => {
+                initScrollAnimations();
+                
+                // Animate progress bars
+                const progressFill = document.querySelector('.progress-fill');
+                progressFill.style.width = '0%';
+                setTimeout(() => {
+                    progressFill.style.width = lifePercentage + '%';
+                }, 100);
+            }, 100);
+        }
+
+        // Share functions
+        function shareOnTwitter() {
+            const age = document.querySelector('.main-age').textContent;
+            const text = `My Life Analysis: I'm ${age} old! Check out your comprehensive life statistics with LifeSpan Analytics.`;
+            const url = window.location.href;
+            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
+        }
+
+        function shareOnFacebook() {
+            const url = window.location.href;
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+        }
+
+        function copyToClipboard() {
+            const age = document.querySelector('.main-age').textContent;
+            const generation = document.querySelector('.identity-value').textContent;
+            const zodiac = document.querySelectorAll('.identity-value')[1].textContent;
+            
+            const text = `My Life Analysis Results:
+Age: ${age}
+Generation: ${generation}
+Zodiac: ${zodiac}
+
+Generated by LifeSpan Analytics - ${window.location.href}`;
+
+            navigator.clipboard.writeText(text).then(() => {
+                const copyBtn = document.querySelector('.share-copy');
+                const originalHtml = copyBtn.innerHTML;
+                copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                setTimeout(() => {
+                    copyBtn.innerHTML = originalHtml;
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
